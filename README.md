@@ -5,6 +5,6 @@ This repository contains automated API tests using Robot Framework and RequestsL
 
 ### 📌 Technologies Used:
 - Framework: *Robot Framework*  
-- Biblioteca: *RequestsLibrary*  
-- Linguagem: *Python*
+- Library: *RequestsLibrary*  
+- Language: *Python*
 - API: *[Serverest API](https://serverest.dev/)* 
