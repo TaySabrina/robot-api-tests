@@ -1,5 +1,7 @@
 *** Settings ***
 Library     RequestsLibrary
+Library     FakerLibrary    locale=pt_BR
+Library     Collections
 
 
 *** Variables ***
@@ -9,9 +11,9 @@ ${BASE_URL}     https://serverest.dev
 
 *** Test Cases ***
 Create new user
-    ${nome}    Set Variable    Tayse Sabrina
-    ${user_email}    Set Variable    tayse@email.com
-    ${user_password}    Set Variable    123456
+    ${nome}    FakerLibrary.Name
+    ${user_email}    FakerLibrary.Email
+    ${user_password}    FakerLibrary.Password
     ${administrador}    Set Variable    true
 
     ${data}    Create Dictionary
@@ -29,16 +31,16 @@ Create new user
     Should Contain    ${response.json()}    message
     Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
 
-    ${user_id}    Set Variable    ${response.json()}[_id]
+    ${user_id}    Get From Dictionary    ${response.json()}    _id
 
-    Set Global Variable    ${user_email}
-    Set Global Variable    ${user_password}
-    Set Global Variable    ${user_id}
+    Set Global Variable    ${user_email}    ${user_email}
+    Set Global Variable    ${user_password}    ${user_password}
+    Set Global Variable    ${user_id}    ${user_id}
 
     Log To Console    \n Usuário Criado com Sucesso!
     Log To Console    ID: ${user_id}
     Log To Console    Email: ${user_email}
-    Log To Console    Resposta: ${response.json()}
+    Log To Console    Resposta: ${response.json()}[message]
 
 Get new user by _id
     ${response}    GET
