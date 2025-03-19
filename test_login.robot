@@ -17,9 +17,10 @@ Login
     ${email} =    Get From Dictionary    ${user_data}    email
     ${password} =    Get From Dictionary    ${user_data}    password
 
-    ${data}     Create Dictionary
-    ...    email=${email}  
-    ...    password=${password}
+    VAR    &{data}
+    ...    email=tayse@email.com
+    ...    password=${PASSWORD}
+
 
     ${response}    POST
     ...    ${BASE_URL}/login

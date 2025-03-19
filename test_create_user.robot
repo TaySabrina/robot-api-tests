@@ -15,10 +15,10 @@ Create New User
     ${email}        FakerLibrary.Email
     ${password}     FakerLibrary.Password
 
-    ${data}    Create Dictionary
-    ...    nome=${nome}
-    ...    email=${email}
-    ...    password=${password}
+    VAR    &{data}
+    ...    nome=Tayse Sabrina
+    ...    email=tayse@email.com
+    ...    password=${PASSWORD}
     ...    administrador=true
 
     ${response}    POST
@@ -27,6 +27,7 @@ Create New User
     ...    headers=${HEADERS}
 
     Should Be Equal As Strings    ${response.status_code}    201
+<<<<<<< HEAD
     Should Contain    ${response.json()}    message
     Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
 
@@ -37,3 +38,6 @@ Create New User
     Create File    ${VAR_FILE}    ${user_data_str}    encoding=UTF-8  # Save as JSON string
 
 
+=======
+    Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
+>>>>>>> main
