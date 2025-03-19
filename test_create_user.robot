@@ -9,7 +9,7 @@ ${BASE_URL}     https://serverest.dev
 
 *** Test Cases ***
 Criar Novo Usuário - Teste Simples
-    &{data}    Create Dictionary
+    VAR    &{data}
     ...    nome=Tayse Sabrina
     ...    email=tayse@email.com
     ...    password=123456
