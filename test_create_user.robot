@@ -1,5 +1,6 @@
 *** Settings ***
 Library     RequestsLibrary
+Resource    variable.resource
 
 
 *** Variables ***
@@ -8,11 +9,11 @@ ${BASE_URL}     https://serverest.dev
 
 
 *** Test Cases ***
-Criar Novo Usuário - Teste Simples
+Create New User
     VAR    &{data}
     ...    nome=Tayse Sabrina
     ...    email=tayse@email.com
-    ...    password=123456
+    ...    password=${PASSWORD}
     ...    administrador=true
 
     ${response}    POST

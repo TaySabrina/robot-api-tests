@@ -1,5 +1,6 @@
 *** Settings ***
 Library     RequestsLibrary
+Resource    variable.resource
 
 
 *** Variables ***
@@ -8,10 +9,10 @@ ${BASE_URL}     https://serverest.dev
 
 
 *** Test Cases ***
-Login com Usuário Criado
+Login
     VAR    &{data}
     ...    email=tayse@email.com
-    ...    password=123456
+    ...    password=${PASSWORD}
 
     ${response}    POST
     ...    ${BASE_URL}/login
