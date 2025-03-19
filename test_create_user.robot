@@ -22,5 +22,4 @@ Create New User
     ...    headers=${HEADERS}
 
     Should Be Equal As Strings    ${response.status_code}    201
-    Should Contain    ${response.json()}    message
     Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
