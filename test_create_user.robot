@@ -30,8 +30,7 @@ Create New User
     Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
 
     # Save the data in JSON format
-    ${user_data} =    Create Dictionary    email=${email}    password=${password}
+    VAR   &{user_data} =   email=${email}    password=${password}
     ${user_data_str} =    Evaluate    json.dumps(${user_data})    # Convert to JSON string
     Create File    ${VAR_FILE}    ${user_data_str}    encoding=UTF-8  # Save as JSON string
-
 
