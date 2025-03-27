@@ -18,7 +18,7 @@ Login
     ${password} =    Get From Dictionary    ${user_data}    password
 
     VAR    &{data}
-    ...    email=tayse@email.com
+    ...    email=${email}
     ...    password=${PASSWORD}
 
 
@@ -29,3 +29,6 @@ Login
 
     Should Be Equal As Strings    ${response.status_code}    200
     Should Contain    ${response.json()}    message
+
+    Log To Console     ${email}
+    Log To Console     ${password}    
