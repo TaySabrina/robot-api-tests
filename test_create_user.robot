@@ -16,8 +16,8 @@ Create New User
     ${password}     FakerLibrary.Password
 
     VAR    &{data}
-    ...    nome=Tayse Sabrina
-    ...    email=tayse@email.com
+    ...    nome=${nome}
+    ...    email=${email}
     ...    password=${PASSWORD}
     ...    administrador=true
 
@@ -28,7 +28,6 @@ Create New User
 
     Should Be Equal As Strings    ${response.status_code}    201
     Should Be Equal As Strings    ${response.json()}[message]    Cadastro realizado com sucesso
-
 
     # Save the data in JSON format
     ${user_data} =    Create Dictionary    email=${email}    password=${password}
