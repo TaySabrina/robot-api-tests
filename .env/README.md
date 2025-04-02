@@ -41,5 +41,9 @@ This repository contains automated API tests for the [ServeRest API](https://ser
 - **Robot Framework**: Install via pip:
   ```bash
   pip install robotframework
-- **RequestsLibrary: For API calls:** pip install robotframework-requests
-- **FakerLibrary: For fake data generation:** pip install robotframework-faker
+- **RequestsLibrary: For API calls:** 
+  ```bash
+  pip install robotframework-requests
+- **FakerLibrary: For fake data generation:** 
+  ```bash
+  pip install robotframework-faker
