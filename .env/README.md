@@ -14,22 +14,7 @@ This repository contains automated API tests for the [ServeRest API](https://ser
 
 ## 📂 Project Structure
 
-robot-api-tests/
-├── tests/                  # Test suites
-│   ├── init.robot      # Top-level suite initialization
-│   ├── users/              # User management tests
-│   │   └── test_create_user.robot
-│   ├── auth/               # Authentication tests
-│   │   └── test_login.robot
-├── libs/                   # Custom libraries (e.g., libraries_api.resource)
-├── resources/              # Shared resources and keywords
-│   ├── keywords/           # Custom keywords
-│   │   ├── api_keywords.robot
-│   │   └── user_keywords.robot
-│   └── variables/          # Variables (e.g., endpoints, paths)
-│       └── variable.resource
-├── data/                   # Test data storage (e.g., user_data.json)
-└── result/                 # Test output (log.html, output.xml, etc.)
+![alt text](image.png)
 
 
 - **`tests/`**: Contains test suites organized by functionality (`users` for creation/retrieval, `auth` for login).
