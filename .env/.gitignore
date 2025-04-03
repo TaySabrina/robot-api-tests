@@ -1,3 +1,5 @@
 __pycache__/
-result/
+log.html
+output.log
+report.html
 data/user_data.json

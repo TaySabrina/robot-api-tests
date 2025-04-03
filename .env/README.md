@@ -47,3 +47,18 @@ This repository contains automated API tests for the [ServeRest API](https://ser
 - **FakerLibrary: For fake data generation:** 
   ```bash
   pip install robotframework-faker
+
+---
+
+## Running the Tests
+- **Run the full test suite**
+  ```bash
+  robot -d result tests
+
+- **Running only  auth test suite**
+  ```bash
+  robot -d result tests/auth
+
+- **Running only  users test suite**
+  ```bash
+  robot -d result tests/users

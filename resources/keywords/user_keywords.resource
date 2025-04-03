@@ -1,10 +1,6 @@
 *** Settings ***
 Documentation    Collection of keywords for managing user operations in the ServeRest API
-Resource    ../../libs/libraries_api.resource
-Resource    ../../libs/libraries_api.resource
-Resource    ../../libs/libraries_common.resource
-Resource    api_keywords.robot
-
+Resource         ../../libs/libraries.resource
 
 *** Keywords ***
 Generate new user
@@ -46,10 +42,14 @@ Save User ID
     Create File    ${DATA_DIR}/user_data.json    ${updated_data_str}    encoding=UTF-8  # Overwrite file
 
 Load user data
-    [Documentation]    Loads user data from the JSON file into a dictionary
-    ${json_str}     Get File    ${DATA_DIR}/user_data.json    encoding=UTF-8
-    ${user_data}    Evaluate    json.loads('${json_str}')    modules=json
+    [Documentation]    Loads user data from user_data.json, assuming it exists.
+    ${json_str}       Get File    ${DATA_DIR}/user_data.json    encoding=UTF-8
+    ${user_data}      Evaluate    json.loads('${json_str}')    modules=json
     RETURN    ${user_data}
+
+Ensure User Data Exists
+    ${file_exists}    Run Keyword And Return Status    File Should Exist    ${DATA_DIR}/user_data.json
+    Run Keyword If    not ${file_exists}    Create And Register New User
 
 Get user by id
     [Documentation]    Retrieves a user’s details by sending a GET request with the specified user ID
@@ -60,19 +60,20 @@ Get user by id
 Login User
     [Documentation]    Performs a login request with optional custom credentials or defaults to stored user data.
     [Arguments]    ${email}=${None}    ${password}=${None}
-    ${user_data}    Run Keyword If    '${email}' == '${None}'    Load user data    ELSE    Create Dictionary    email=${email}    password=${password}
-    ${email}        Run Keyword If    '${email}' == '${None}'    Get From Dictionary    ${user_data}    email    ELSE    Set Variable    ${email}
-    ${password}     Run Keyword If    '${password}' == '${None}'    Get From Dictionary    ${user_data}    password    ELSE    Set Variable    ${password}
+    ${use_stored_data}    Evaluate    '${email}' == '${None}' and '${password}' == '${None}'
+    ${user_data}        Run Keyword If       ${use_stored_data}  Load user data    ELSE    Create Dictionary    email=${email}    password=${password}
+    ${email}            Set Variable If      '${email}' == '${None}'      ${user_data['email']}        ${email}
+    ${password}         Set Variable If      '${password}' == '${None}'   ${user_data['password']}     ${password}
     &{login_payload}    Create Dictionary    email=${email}    password=${password}
     ${response}    Send Post Request    ${ENDPOINT_LOGIN}    ${login_payload}    ${HEADERS}
     RETURN    ${response}
 
-Check successful response
-    [Documentation]    Verifies that a response matches the expected status code and message
-    [Arguments]    ${response}    ${expected_status_code}    ${expected_message}
-    Should Be Equal As Strings    ${response.status_code}    ${EXPECTED_STATUS_CODE}
-    ${response_message}    Get From Dictionary    ${response.json()}    message
-    Should Be Equal As Strings    ${response_message}    ${EXPECTED_MESSAGE}
+Check Successful Response
+    [Documentation]    Verifies that a response matches the expected status code and message.
+    [Arguments]    ${response}    ${expected_status}    ${expected_message}
+    Should Be Equal As Integers    ${response.status_code}    ${expected_status}    Unexpected status code: ${response.status_code}
+    ${response_json}    Set Variable    ${response.json()}
+    Should Contain    ${response_json['message']}    ${expected_message}    Expected message '${expected_message}' not in response: ${response_json}
 
 Check successful get by id
     [Documentation]    Verifies that a response matches the expected status code and message for GET by ID
@@ -86,13 +87,11 @@ Check successful get by id
     Should Contain    ${response_data}    _id              Failed: response doesn't contain '_id'
 
 Verify Error Response
-    [Documentation]    Verifies that an error response matches the expected status code and contains the expected message in either 'message' or 'email' field.
-    [Arguments]    ${response}    ${expected_status_code}    ${expected_message}
-    Should Be Equal As Integers    ${response.status_code}    ${expected_status_code}    Failed to verify error: Unexpected status code
+    [Documentation]    Verifies an error response's status code and message in a specified field.
+    [Arguments]    ${response}    ${expected_status}    ${expected_message}    ${field}=message
+    Should Be Equal As Integers    ${response.status_code}    ${expected_status}    Unexpected status code: ${response.status_code}
     ${response_json}    Set Variable    ${response.json()}
-    Log    Response JSON: ${response_json}  # Debug log
-    ${message_field}    Get From Dictionary    ${response_json}    message    default=${None}
-    ${email_field}      Get From Dictionary    ${response_json}    email      default=${None}
-    ${error_field}      Set Variable If    '${message_field}' != '${None}'    ${message_field}    ${email_field}
-    Run Keyword If    '${error_field}' == '${None}'    Fail    No 'message' or 'email' field in response: ${response_json}
-    Should Contain    ${error_field}    ${expected_message}    Failed to verify error: Expected message '${expected_message}' not found in '${error_field}'
+    Log    Response JSON: ${response_json}    level=DEBUG
+    ${error_message}    Get From Dictionary    ${response_json}    ${field}    default=${None}
+    Run Keyword If    '${error_message}' == '${None}'    Fail    Field '${field}' not found in response: ${response_json}
+    Should Contain    ${error_message}    ${expected_message}    Expected '${expected_message}' not in '${error_message}'

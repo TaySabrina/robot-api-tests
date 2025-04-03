@@ -1,8 +1,6 @@
 *** Settings ***
 Documentation    Provides keywords for making HTTP requests to the ServeRest API
-Resource         ../../libs/libraries_api.resource
-Resource         ../../resources/variables/variable.resource
-Resource         user_keywords.robot
+Resource         ../../libs/libraries.resource
 
 *** Keywords ***
 Send Post Request
