@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.12.9 on win32)" generated="2025-04-11T17:49:50.983827" rpa="false" schemaversion="5">
+<suite id="s1" name="Get User" source="C:\tayse\learning\PythonProjects\Robot\robot-api-tests\tests\users\get_user.robot">
+<kw name="Run Keywords" owner="BuiltIn" type="SETUP">
+<kw name="Create And Register New User" owner="user_keywords">
+<kw name="Generate new user" owner="user_keywords">
+<kw name="Name" owner="FakerLibrary">
+<msg time="2025-04-11T17:49:52.566328" level="INFO">${nome} = William Cherry</msg>
+<var>${nome}</var>
+<doc>:example: 'John Doe'</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</kw>
+<kw name="Email" owner="FakerLibrary">
+<msg time="2025-04-11T17:49:52.566328" level="INFO">${email} = lbauer@example.net</msg>
+<var>${email}</var>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</kw>
+<kw name="Password" owner="FakerLibrary">
+<msg time="2025-04-11T17:49:52.566328" level="INFO">${password} = V1Qoyf)v$#</msg>
+<var>${password}</var>
+<doc>Generate a random password of the specified ``length``.</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</kw>
+<variable name="&amp;{user_data}">
+<msg time="2025-04-11T17:49:52.566328" level="INFO">&amp;{user_data} = { nome=William Cherry | email=lbauer@example.net | password=V1Qoyf)v$# | administrador=true }</msg>
+<var>nome=${nome}</var>
+<var>email=${email}</var>
+<var>password=${password}</var>
+<var>administrador=true</var>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</variable>
+<return>
+<value>${user_data}</value>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:52.566328" level="INFO">${user_data} = {'nome': 'William Cherry', 'email': 'lbauer@example.net', 'password': 'V1Qoyf)v$#', 'administrador': 'true'}</msg>
+<var>${user_data}</var>
+<doc>Generates fake user data for testing purposes using FakerLibrary</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.000000"/>
+</kw>
+<kw name="Create new user" owner="user_keywords">
+<kw name="Send Post Request" owner="post_usuarios">
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-04-11T17:49:53.273290" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '108'} 
+ body=b'{"nome": "William Cherry", "email": "lbauer@example.net", "password": "V1Qoyf)v$#", "administrador": "true"}' 
+ </msg>
+<msg time="2025-04-11T17:49:53.273290" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'e7e0d54b3cf9cc625ee9ccfc1ce55762;o=1', 'date': 'Fri, 11 Apr 2025 20:49:53 GMT', 'server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "ZsOFY40E6ocYQRnI"
+} 
+ </msg>
+<msg time="2025-04-11T17:49:53.273290" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}${endpoint}</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${HEADERS}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.706962"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:53.273290" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${ENDPOINT_USUARIOS}</arg>
+<arg>${user_data}</arg>
+<arg>${HEADERS}</arg>
+<doc>Sends a POST request to the specified endpoint with the given payload and headers</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.706962"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:53.273290" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${user_data}</arg>
+<doc>Creates a new user by sending a POST request with the provided user data</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.706962"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${user_data}</arg>
+<arg>id=${response.json()}[_id]</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.000000"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.273290" level="INFO">${user_data} = {'nome': 'William Cherry', 'email': 'lbauer@example.net', 'password': 'V1Qoyf)v$#', 'administrador': 'true', 'id': 'ZsOFY40E6ocYQRnI'}</msg>
+<arg>${user_data}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.000000"/>
+</kw>
+<kw name="Check Successful Response" owner="user_keywords">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.288904" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>Unexpected status code: ${response.status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.015614"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.288904" level="INFO">${response_json} = {'message': 'Cadastro realizado com sucesso', '_id': 'ZsOFY40E6ocYQRnI'}</msg>
+<var>${response_json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_json['message']}</arg>
+<arg>${expected_message}</arg>
+<arg>Expected message '${expected_message}' not in response: ${response_json}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</kw>
+<arg>${response}</arg>
+<arg>201</arg>
+<arg>Cadastro realizado com sucesso</arg>
+<doc>Verifies that a response matches the expected status code and message.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.273290" elapsed="0.015614"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>User created and register successfully</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${user_data}</value>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</return>
+<doc>Generates a new user, registers it, and stores the data in the global user_data variable.</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.722576"/>
+</kw>
+<arg>Create And Register New User</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2025-04-11T17:49:52.566328" elapsed="0.722576"/>
+</kw>
+<test id="s1-t1" name=" Get User By Id" line="9">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.288904" level="INFO">${user_id} = ZsOFY40E6ocYQRnI</msg>
+<var>${user_id}</var>
+<arg>${user_data}[id]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</kw>
+<kw name="Get user by id" owner="user_keywords">
+<kw name="Send Get Request" owner="get_usuarios">
+<kw name="Run Keyword If" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.288904" level="INFO">${query_string} = None</msg>
+<var>${query_string}</var>
+<arg>'${params}' != '${None}'</arg>
+<arg>Create Dictionary</arg>
+<arg>@{params}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.000000"/>
+</kw>
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-04-11T17:49:53.741932" level="INFO">GET Request : url=https://serverest.dev/usuarios/ZsOFY40E6ocYQRnI 
+ path_url=/usuarios/ZsOFY40E6ocYQRnI 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2025-04-11T17:49:53.741932" level="INFO">GET Response : url=https://serverest.dev/usuarios/ZsOFY40E6ocYQRnI 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'd1524e1c7118f18d5d4a28e6bb694e26', 'date': 'Fri, 11 Apr 2025 20:49:53 GMT', 'server': 'Google Frontend', 'Content-Length': '157'} 
+ body={
+    "nome": "William Cherry",
+    "email": "lbauer@example.net",
+    "password": "V1Qoyf)v$#",
+    "administrador": "true",
+    "_id": "ZsOFY40E6ocYQRnI"
+} 
+ </msg>
+<msg time="2025-04-11T17:49:53.741932" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}${endpoint}</arg>
+<arg>headers=${headers}</arg>
+<arg>params=${query_string}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.453028"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:53.741932" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${ENDPOINT_USUARIOS}/${user_id}</arg>
+<arg>${HEADERS}</arg>
+<doc>Sends a GET request to the specified endpoint using the given headers and optional query parameters.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.453028"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:53.741932" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${user_id}</arg>
+<doc>Retrieves a user’s details by sending a GET request with the specified user ID</doc>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.453028"/>
+</kw>
+<kw name="Check successful get by id" owner="user_keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.741932" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status_code}</arg>
+<arg>${expected_message}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.741932" level="INFO">${response_data} = {'nome': 'William Cherry', 'email': 'lbauer@example.net', 'password': 'V1Qoyf)v$#', 'administrador': 'true', '_id': 'ZsOFY40E6ocYQRnI'}</msg>
+<var>${response_data}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_data}</arg>
+<arg>nome</arg>
+<arg>Failed: response doesn't contain 'nome'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_data}</arg>
+<arg>email</arg>
+<arg>Failed: response doesn't contain 'email'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_data}</arg>
+<arg>password</arg>
+<arg>Failed: response doesn't contain 'password'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_data}</arg>
+<arg>administrador</arg>
+<arg>Failed: response doesn't contain 'administrador'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response_data}</arg>
+<arg>_id</arg>
+<arg>Failed: response doesn't contain '_id'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<arg>Failed to retrieve user: Unexpected status code</arg>
+<doc>Verifies that a response matches the expected status code and message for GET by ID</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>GET Status Code: ${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<doc>Get user by ID generated during creation and verify the response</doc>
+<tag>get_usuarios</tag>
+<tag>usuarios</tag>
+<status status="PASS" start="2025-04-11T17:49:53.288904" elapsed="0.453028"/>
+</test>
+<test id="s1-t2" name="Get User By Invalid Id" line="18">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.741932" level="INFO">${invalid_id} = invalidid1234567</msg>
+<var>${invalid_id}</var>
+<arg>invalidid1234567</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.000000"/>
+</kw>
+<kw name="Get user by id" owner="user_keywords">
+<kw name="Send Get Request" owner="get_usuarios">
+<kw name="Run Keyword If" owner="BuiltIn">
+<msg time="2025-04-11T17:49:53.757624" level="INFO">${query_string} = None</msg>
+<var>${query_string}</var>
+<arg>'${params}' != '${None}'</arg>
+<arg>Create Dictionary</arg>
+<arg>@{params}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.015692"/>
+</kw>
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-04-11T17:49:54.192096" level="INFO">GET Request : url=https://serverest.dev/usuarios/invalidid1234567 
+ path_url=/usuarios/invalidid1234567 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2025-04-11T17:49:54.192096" level="INFO">GET Response : url=https://serverest.dev/usuarios/invalidid1234567 
+ status=400, reason=Bad Request 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'a993acb8fe3510dd1148458ddb1016ea', 'date': 'Fri, 11 Apr 2025 20:49:54 GMT', 'server': 'Google Frontend', 'Content-Length': '45'} 
+ body={
+    "message": "Usuário não encontrado"
+} 
+ </msg>
+<msg time="2025-04-11T17:49:54.192096" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}${endpoint}</arg>
+<arg>headers=${headers}</arg>
+<arg>params=${query_string}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.757624" elapsed="0.434472"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:54.192096" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>${ENDPOINT_USUARIOS}/${user_id}</arg>
+<arg>${HEADERS}</arg>
+<doc>Sends a GET request to the specified endpoint using the given headers and optional query parameters.</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.450164"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</return>
+<msg time="2025-04-11T17:49:54.192096" level="INFO">${response} = &lt;Response [400]&gt;</msg>
+<var>${response}</var>
+<arg>${invalid_id}</arg>
+<doc>Retrieves a user’s details by sending a GET request with the specified user ID</doc>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.450164"/>
+</kw>
+<kw name="Verify Error Response" owner="user_keywords">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-04-11T17:49:54.192096" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${expected_status}</arg>
+<arg>Unexpected status code: ${response.status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-04-11T17:49:54.192096" level="INFO">${response_json} = {'message': 'Usuário não encontrado'}</msg>
+<var>${response_json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-04-11T17:49:54.192096" level="INFO">${error_message} = Usuário não encontrado</msg>
+<var>${error_message}</var>
+<arg>${response_json}</arg>
+<arg>${field}</arg>
+<arg>default=${None}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="'${error_message}' == '${None}'">
+<kw name="Fail" owner="BuiltIn">
+<arg>Field '${field}' not found in response: ${response_json}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</if>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${error_message}</arg>
+<arg>${expected_message}</arg>
+<arg>Expected '${expected_message}' not in '${error_message}'</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<arg>${response}</arg>
+<arg>400</arg>
+<arg>Usuário não encontrado</arg>
+<doc>Verifies an error response's status code and message in a specified field.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Failed GET Status: ${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Failed GET Message: ${response.json()['message']}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-04-11T17:49:54.192096" elapsed="0.015626"/>
+</kw>
+<doc>Attempts to retrieve a user with an invalid ID, expecting a failure.</doc>
+<tag>get_usuarios</tag>
+<tag>usuarios</tag>
+<status status="PASS" start="2025-04-11T17:49:53.741932" elapsed="0.465790"/>
+</test>
+<doc>Test suite for getting user details by ID</doc>
+<status status="PASS" start="2025-04-11T17:49:50.983827" elapsed="3.224521"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="2" fail="0" skip="0">get_usuarios</stat>
+<stat pass="2" fail="0" skip="0">usuarios</stat>
+</tag>
+<suite>
+<stat name="Get User" id="s1" pass="2" fail="0" skip="0">Get User</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
