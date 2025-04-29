@@ -14,12 +14,52 @@ This repository contains automated API tests for the [ServeRest API](https://ser
 
 ## 📂 Project Structure
 
-![alt text](image.png)
-
-
-- **`tests/`**: Contains test suites organized by functionality (`users` for creation/retrieval, `auth` for login).
-- **`data/user_data.json`**: Stores user data generated during tests (e.g., for login after creation).
-- **`result/`**: Stores execution outputs (created automatically).
+```bash
+ROBOT-API-TESTS/
+│
+├── .env                         # Environment variables
+├── .gitignore                  # Git ignored files
+│
+├── libs/
+│   └── libraries.resource      # Shared keyword libraries
+│
+├── resources/
+│   ├── controller/             # Endpoint-specific resource files
+│   │   ├── delete_usuarios.resource
+│   │   ├── get_usuarios.resource
+│   │   ├── post_login.resource
+│   │   ├── post_usuarios.resource
+│   │   └── put_usuarios.resource
+│   │
+│   ├── keywords/               # Custom reusable keywords
+│   │   ├── action_keywords.resource
+│   │   ├── user_keywords.resource
+│   │   └── utils.resource
+│   │
+│   └── variables/
+│       └── variable.resource   # Global variables
+│
+├── tests/                      # Test cases organized by feature
+│   ├── login/
+│   │   └── post_login.robot
+│   │
+│   ├── users/
+│   │   ├── get_user_id.robot
+│   │   └── post_user.robot
+│   │
+│   └── usuarios/
+│       ├── get_user_id.robot
+│       ├── post_user.robot
+│       ├── put_user.robot
+│       └── __init__.robot     # Optional initialization file
+│
+└── README.md                   # Project documentation
+```
+## ✅ Folder Purpose
+- libs/ – Contains shared keyword libraries.
+- resources/controller/ – Contains resource files specific to each API endpoint.
+- resources/keywords/ – Contains reusable keyword definitions.
+- resources/variables/ – Stores global and configurable variables.
 
 ---
 
