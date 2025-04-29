@@ -55,10 +55,22 @@ This repository contains automated API tests for the [ServeRest API](https://ser
   ```bash
   robot -d result tests
 
-- **Running only  auth test suite**
+- **Running only login test suite**
   ```bash
   robot -d result tests/auth
 
-- **Running only  users test suite**
+- **Running only users test suite**
   ```bash
   robot -d result tests/users
+
+- **Running tests with a specific tag**
+  ```bash
+  robot --include login tests/
+
+- **Running tests with a multiple tags**
+  ```bash
+  robot --include login,post_usuarios tests/
+
+- **Running tests that do not have a specific tag**
+  ```bash
+  robot --exclude login tests/
