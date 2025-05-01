@@ -9,7 +9,7 @@ Test Tags           put_usuarios    usuarios
 
 Update User By Id
     [Documentation]    Updates the name of a previously created user, reusing the original user_data and modifying only the name field.
-    ${user_id}       Set Variable    ${user_data}[id]
+    VAR     ${user_id}         ${user_data}[id]
     ${new_name}      FakerLibrary.Name
     # Create a copy of the original user data to modify
     &{updated_user}  Copy Dictionary    ${user_data}
