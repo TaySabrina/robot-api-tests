@@ -10,8 +10,7 @@ Post new user
     [Documentation]    Creates a new user by sending a POST request with the provided user data
     [Arguments]        ${user_data}
     ${response}        Post Usuarios     ${user_data}    ${HEADERS}
-    RETURN             ${response}
-    
+    RETURN             ${response}   
 
 Get user by id
     [Arguments]    ${user_id}
