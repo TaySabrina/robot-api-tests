@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation       Test suite for creating and registering users in the ServeRest API
 Resource            ../../libs/libraries.resource
-Suite Setup         Run Keywords
-...                 Create And Register New User
+Suite Setup         Create And Register New User            
 Test Tags           put_usuarios    usuarios
 
 *** Test Cases ***
@@ -21,7 +20,11 @@ Update User By Id
     ${response}      Put user by id    ${user_id}    ${updated_user}
     Check successful response    ${response}    200    Registro alterado com sucesso
     Log        PUT Status Code: ${response.status_code}
-
+    #Validate that the updated user data matches the expected values
+    ${get_response}   Get user by id    ${user_id}
+    Should Be Equal As Strings    ${get_response.json()}[nome]    ${new_name}
+    Log    Validation via GET: name successfully updated to ${new_name}
+    
 Update User Without Providing Name
     [Documentation]    Attempts to update a user without providing the 'nome' field, expecting a validation error.
     [Tags]             negative    

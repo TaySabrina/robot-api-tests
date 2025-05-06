@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation       Test suite for creating and registering users in the ServeRest API
 Resource            ../../libs/libraries.resource
-Suite Setup         Run Keywords
-...                 Create And Register New User
+Suite Setup         Create And Register New User        
 Test Tags           delete_usuarios    usuarios
 
 *** Test Cases ***
