@@ -21,3 +21,4 @@ Login With Invalid Password
     Verify Error Response    ${response}    401    Email e/ou senha inválidos    message
     Log     Failed Login Status: ${response.status_code}
     Log     Failed Login Message: ${response.json()}[message]
+

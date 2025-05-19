@@ -6,6 +6,7 @@ Library             JSONLibrary
 Library             Collections
 Library             OperatingSystem
 Library             FakerLibrary
+Library             JsonValidator
 Resource            ../resources/variables/variable.resource
 Resource            ../resources/keywords/action_keywords.resource
 Resource            ../resources/keywords/utils.resource
@@ -14,3 +15,6 @@ Resource            ../resources/controller/post_usuarios.resource
 Resource            ../resources/controller/post_login.resource
 Resource            ../resources/controller/put_usuarios.resource
 Resource            ../resources/controller/delete_usuarios.resource
+Resource            ../resources/controller/post_produtos.resource
+Resource            ../resources/controller/get_produtos.resource
+

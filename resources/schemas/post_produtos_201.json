@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "POST Produto Success Response Schema",
+  "type": "object",
+  "required": [
+    "message",
+    "_id"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Success message"
+    },
+    "_id": {
+      "type": "string",
+      "description": "Created product ID"
+    }
+  },
+  "additionalProperties": false
+}
