@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "GET Produtos Response Schema",
+    "type": "object",
+    "required": [
+      "quantidade",
+      "produtos"
+    ],
+    "properties": {
+      "quantidade": {
+        "type": "integer",
+        "description": "Total number of products returned"
+      },
+      "produtos": {
+        "type": "array",
+        "description": "List of products",
+        "items": {
+          "type": "object",
+          "required": [
+            "_id",
+            "nome",
+            "preco",
+            "descricao",
+            "quantidade"
+          ],
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Product ID"
+            },
+            "nome": {
+              "type": "string",
+              "description": "Product name"
+            },
+            "preco": {
+              "type": "integer",
+              "description": "Product price"
+            },
+            "descricao": {
+              "type": "string",
+              "description": "Product description"
+            },
+            "quantidade": {
+              "type": "integer",
+              "description": "Product quantity"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+  
