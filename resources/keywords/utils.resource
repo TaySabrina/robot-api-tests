@@ -34,6 +34,14 @@ Create And Register New User
     Log              User created and register successfully
     RETURN                 ${user_data}    # Return the user data for further use
 
+Create New User as Admin False
+    [Documentation]    Generates and registers a new user with 'administrador' set to false, then saves it to a suite variable.
+    ${not_admin_user}    Generate new user
+    Set To Dictionary    ${not_admin_user}    administrador=false
+    ${response}=    Post new user    ${not_admin_user}
+    Status Should Be    201    ${response}
+    Set Suite Variable    ${NOT_ADMIN_USER}    ${not_admin_user}
+
 Login registered user and save token
     [Documentation]    Creates a new user, logs in with the generated credentials, extracts the auth token,
     ...                and stores all user data (including the token) globally
@@ -50,7 +58,6 @@ Login registered user and save token
     VAR             ${user_data}    ${user_data}    scope=GLOBAL
     Log             Status Code: ${response.status_code}
     Log             Received Message: ${response.json()}[message]
-    Log To Console            Token: ${token}
     RETURN          ${user_data}
 
 Check Successful Response
@@ -90,7 +97,6 @@ Verify Error Response
     ...    ${error_message}
     ...    ${expected_message}
     ...    Expected '${expected_message}' not in '${error_message}'
-
 
 Generate And Save Random Product Data
     [Documentation]    Creates random product data, converts to json file and saves it to a variable.
