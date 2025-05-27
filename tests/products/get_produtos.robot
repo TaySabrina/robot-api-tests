@@ -20,6 +20,9 @@ GET All Products - No Filters
     Should Be Equal    ${retrieved_product}[descricao]    ${product_data}[descricao]
     Should Be Equal    ${retrieved_product}[preco]        ${product_data}[preco]
     Should Be Equal    ${retrieved_product}[quantidade]   ${product_data}[quantidade]
+    # Contract validation
+    VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_200.json
+    Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    All products response validated successfully: ${response.json()}
 
 GET All Products - Filter By Quantity
@@ -38,4 +41,7 @@ GET All Products - Filter By Quantity
     # Check that all products have quantity == 2 using Python all()
     ${all_quantity_2}=    Evaluate    all(p['quantidade'] == 2 for p in ${response.json()}[produtos])
     Should Be True    ${all_quantity_2}
+    # Contract validation
+    VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_200.json
+    Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    All returned products have quantity 2: ${response.json()}[produtos]

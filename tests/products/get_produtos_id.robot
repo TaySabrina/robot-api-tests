@@ -16,6 +16,9 @@ GET Product By ID
     Should Be Equal    ${response.json()}[descricao]    ${product_data}[descricao]
     Should Be Equal    ${response.json()}[preco]        ${product_data}[preco]
     Should Be Equal    ${response.json()}[quantidade]   ${product_data}[quantidade]
+    # Contract validation
+    VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_id_200.json
+    Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    GET response validated successfully: ${response.json()}
 
 GET Product By ID - Product Not Found
@@ -30,6 +33,8 @@ GET Product By ID - Product Not Found
     Status Should Be    400    ${response}
     # Assert that the response contains the expected error message
     Should Be Equal    ${response.json()}[message]    Produto não encontrado
-    # Log the response for debugging purposes
+     # Contract validation
+    VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_id_400.json
+    Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    Response 400 with expected message: ${response.json()}
 
