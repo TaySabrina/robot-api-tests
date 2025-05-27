@@ -13,7 +13,6 @@ Login
     Log     Status Code: ${response.status_code}
     Log     Received Message: ${response.json()}[message]
 
-
 Login With Invalid Password
     [Documentation]    Attempts to log in with a registered email and an incorrect password, expecting a failure.
     VAR    ${email} =       ${user_data}[email]
@@ -21,3 +20,4 @@ Login With Invalid Password
     Verify Error Response    ${response}    401    Email e/ou senha inválidos    message
     Log     Failed Login Status: ${response.status_code}
     Log     Failed Login Message: ${response.json()}[message]
+

@@ -12,7 +12,6 @@ Create New User With Missing Email
     Log       Failed Create Status: ${response.status_code}
     Log       Failed Create Message: ${response.json()}[email]
 
-
 Create New User With Missing Password
     [Documentation]    Attempts to create a new user with missing password and verifies the error response.
     ${user_partial_data}      Generate Partial User Data    password=${None}
