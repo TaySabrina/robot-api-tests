@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "quantidade": { "type": "integer" },
+    "produtos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "nome": { "type": "string" },
+          "descricao": { "type": "string" },
+          "preco": { "type": "number" },
+          "quantidade": { "type": "integer" },
+          "imagem": { "type": "string" }
+        },
+        "required": ["_id", "nome", "descricao", "preco", "quantidade"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["quantidade", "produtos"],
+  "additionalProperties": false
+}
