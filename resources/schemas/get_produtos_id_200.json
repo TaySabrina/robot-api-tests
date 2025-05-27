@@ -1,12 +1,12 @@
 {
   "type": "object",
   "properties": {
-    "id": { "type": "string" },
+    "_id": { "type": "string" },
     "nome": { "type": "string" },
     "descricao": { "type": "string" },
     "preco": { "type": "number" },
     "quantidade": { "type": "integer" }
   },
-  "required": ["id", "nome", "descricao", "preco", "quantidade"],
+  "required": ["_id", "nome", "descricao", "preco", "quantidade"],
   "additionalProperties": false
 }
