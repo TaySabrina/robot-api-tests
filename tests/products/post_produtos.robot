@@ -6,23 +6,11 @@ Test Tags           post_produtos      produtos
 
 *** Test Cases ***
 Create New Product - Success
-    [Documentation]    Create a new product and verify the response
-    Login registered user and save token
-    ${product_data}    Generate And Save Random Product Data
-    VAR    ${token}    ${user_data.token}
-    # Prepare headers with the token
-    VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
-    ${response}    Post new product       ${product_data}    ${headers}
-    Status Should Be    201    ${response}
-    Should Be Equal    ${response.json()}[message]    Cadastro realizado com sucesso
-    Dictionary Should Contain Key    ${response.json()}    _id
-    # Store product ID for later use
-    Set Suite Variable    ${CREATED_PRODUCT_ID}    ${response.json()}[_id]
-    # Contract validation
+    ${product_data}    Create And Register New Product
+    Dictionary Should Contain Key    ${product_data}    id
+    Log    product_id: ${product_data}[id]
     VAR    ${schema_path}=     ${CURDIR}/../../resources/schemas/post_produtos_201.json
-    Validate JsonSchema From File    ${response.text}    ${schema_path}
-    Log        message: ${response.json()}[message]
-    Log        product_id: ${response.json()}[_id]    
+    Validate JsonSchema From File    ${product_data}[raw_response_json]    ${schema_path}
 
 
 Create New Product - Fail Unauthorized
@@ -41,39 +29,40 @@ Create New Product - Fail Unauthorized
 
 
 Create New Product - Error With Duplicate Product
-    [Documentation]    Attempt to create a product with a name that already exists and verify error response
+  [Documentation]    Attempt to create a product with a name that already exists and verify error response
     [Tags]    negative
-    Login registered user and save token
-    ${product_data}    Generate And Save Random Product Data
-    VAR    ${token}    ${user_data.token}
-    # Prepare headers with the token
-    VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
-    # First create a product successfully
-    ${first_response}    Post new product    ${product_data}    ${headers}
-    Status Should Be    201    ${first_response}
-    # Try to create the same product again
-    ${second_response}    Post new product    ${product_data}    ${headers}
+    # Create product and register (this already creates and registers a product)
+    ${product_data}    Create And Register New Product
+    ${token}    Set Variable    ${user_data}[token]
+    VAR    &{headers}        Authorization=${token}    Content-Type=application/json
+    # Generate a fresh new product data with the **same name** as before
+    # To test duplicate, we need the same name. So reuse the name from ${product_data}
+    ${duplicate_product_data}    Generate And Save Random Product Data
+    Set To Dictionary    ${duplicate_product_data}    nome=${product_data}[nome]
+    # Try to create the duplicate product
+    ${second_response}    Post new product    ${duplicate_product_data}    ${headers}
     Status Should Be    400    ${second_response}
+    Dictionary Should Contain Key    ${second_response.json()}    message
     Should Be Equal    ${second_response.json()}[message]    Já existe produto com esse nome
-    # Contract validation for error response
-    VAR    ${schema_path}    ${CURDIR}/../../resources/schemas/post_produtos_400.json
+    # Contract validation
+    VAR    ${schema_path}     ${CURDIR}/../../resources/schemas/post_produtos_400.json
     Validate JsonSchema From File    ${second_response.text}    ${schema_path}
     Log    Error message: ${second_response.json()}[message]
 
 
 Create New Product - Access Denied for Non-Admin User
-    [Documentation]    Verifies that a non-admin user cannot create a product and receives a 403 response.
+    [Documentation]    Verify that a non-admin user cannot create a product and receives a 403 response.
     [Tags]             negative
-    # Create a non-admin user
-    Create New User as Admin False
-    # Log in with the newly created user
-    ${response}    Login User    ${NOT_ADMIN_USER.email}    ${NOT_ADMIN_USER.password}
-    VAR    ${token}    ${response.json()}[authorization]
-    VAR    &{headers}    Authorization=${token}    Content-Type=application/json
-    # Generate product data and attempt creation
+    # Create a non-admin user and login to get token
+    ${not_admin_user}    Create New User as Admin False
+    ${response}    Login User    ${not_admin_user}[email]    ${not_admin_user}[password]
+    ${token}    Set Variable    ${response.json()}[authorization]
+    &{headers}    Create Dictionary    Authorization=${token}    Content-Type=application/json
+    # Generate product data (reusable) and attempt to create product
     ${product_data}    Generate And Save Random Product Data
     ${response}    Post new product    ${product_data}    ${headers}
-    # Validate the response and schema
+    # Verify 403 Forbidden response and error message
     Status Should Be    403    ${response}
     Should Be Equal    ${response.json()}[message]    Rota exclusiva para administradores
+    # Validate error response schema
     Validate JsonSchema From File    ${response.text}    ${CURDIR}/../../resources/schemas/post_produtos_403.json

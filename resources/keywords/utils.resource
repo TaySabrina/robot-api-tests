@@ -38,9 +38,9 @@ Create New User as Admin False
     [Documentation]    Generates and registers a new user with 'administrador' set to false, then saves it to a suite variable.
     ${not_admin_user}    Generate new user
     Set To Dictionary    ${not_admin_user}    administrador=false
-    ${response}=    Post new user    ${not_admin_user}
+    ${response}    Post new user    ${not_admin_user}
     Status Should Be    201    ${response}
-    Set Suite Variable    ${NOT_ADMIN_USER}    ${not_admin_user}
+    RETURN        ${not_admin_user}
 
 Login registered user and save token
     [Documentation]    Creates a new user, logs in with the generated credentials, extracts the auth token,
@@ -111,4 +111,18 @@ Generate And Save Random Product Data
     Set To Dictionary    ${create_product_data}    quantidade=${random_quantity}
     # Save data to file
     ${product_data}    Convert To Json    ${create_product_data}
+    RETURN    ${product_data}
+
+
+Create And Register New Product
+    [Documentation]    Generates a new user, registers it, and stores the data in the global user_data variable.
+    Login registered user and save token
+    ${product_data}    Generate And Save Random Product Data
+    VAR    ${token}    ${user_data}[token]
+    VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
+    ${response}    Post new product    ${product_data}    ${headers}
+    Set To Dictionary    ${product_data}    id=${response.json()}[_id]
+    Set To Dictionary    ${product_data}    raw_response_json=${response.json()}
+    VAR    ${product_data}    ${product_data}    scope=GLOBAL
+    Check successful response    ${response}    201    Cadastro realizado com sucesso
     RETURN    ${product_data}
