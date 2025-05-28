@@ -4,7 +4,7 @@ Resource            ../../libs/libraries.resource
 
 
 *** Keywords ***
-Get Produtos
+Get Products
     [Documentation]    Retrieves product details from the ServeRest API, either by ID or all products.
     [Arguments]    ${headers}    ${product_id}=${EMPTY}    ${params}=${NONE}
     # Define URL based on product ID presence

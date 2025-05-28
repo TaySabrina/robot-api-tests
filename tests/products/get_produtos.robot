@@ -7,10 +7,9 @@ Test Tags           get_products    products
 *** Test Cases ***
 GET All Products - No Filters
     [Documentation]    Create a product and validate that it appears in the list of all products
-    ${product_data}    Create And Register New Product
-    VAR    ${token}    ${user_data}[token]
+    ${product_data}    ${token}    Create And Register New Product    
     VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
-    ${response}    Get Produtos    ${headers}    ${EMPTY}    ${NONE}
+    ${response}    Get Products    ${headers}    ${EMPTY}    ${NONE}
     Status Should Be    200    ${response}
     VAR    ${product_id}     ${product_data}[id]
     ${all_products} =    Evaluate    [p for p in ${response.json()['produtos']} if p['_id'] == '${product_id}']
@@ -20,7 +19,7 @@ GET All Products - No Filters
     Should Be Equal    ${retrieved_product}[descricao]    ${product_data}[descricao]
     Should Be Equal    ${retrieved_product}[preco]        ${product_data}[preco]
     Should Be Equal    ${retrieved_product}[quantidade]   ${product_data}[quantidade]
-    # Contract validation
+    # Contract validation for 200 response
     VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_200.json
     Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    All products response validated successfully: ${response.json()}
@@ -36,12 +35,12 @@ GET All Products - Filter By Quantity
     ${response}   Post new product    ${product_data}    ${headers}
     Status Should Be    201    ${response}
     # Request products filtered by quantity=2
-    ${response}    Get Produtos    headers=${headers}    product_id=${EMPTY}    params=quantidade=2
+    ${response}    Get Products    headers=${headers}    product_id=${EMPTY}    params=quantidade=2
     Status Should Be    200    ${response}
     # Check that all products have quantity == 2 using Python all()
     ${all_quantity_2}=    Evaluate    all(p['quantidade'] == 2 for p in ${response.json()}[produtos])
     Should Be True    ${all_quantity_2}
-    # Contract validation
+    # Contract validation for 200 response
     VAR    ${schema_path}=    ${CURDIR}/../../resources/schemas/get_produtos_200.json
     Validate JsonSchema From File    ${response.text}    ${schema_path}
     Log    All returned products have quantity 2: ${response.json()}[produtos]

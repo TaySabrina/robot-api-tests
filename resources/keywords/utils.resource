@@ -116,6 +116,7 @@ Generate And Save Random Product Data
 
 Create And Register New Product
     [Documentation]    Generates a new user, registers it, and stores the data in the global user_data variable.
+    [Arguments]    ${return_token}=${True}
     Login registered user and save token
     ${product_data}    Generate And Save Random Product Data
     VAR    ${token}    ${user_data}[token]
@@ -125,4 +126,8 @@ Create And Register New Product
     Set To Dictionary    ${product_data}    raw_response_json=${response.json()}
     VAR    ${product_data}    ${product_data}    scope=GLOBAL
     Check successful response    ${response}    201    Cadastro realizado com sucesso
-    RETURN    ${product_data}
+    IF    ${return_token}
+        RETURN    ${product_data}    ${token}
+    ELSE
+        RETURN    ${product_data}
+    END
