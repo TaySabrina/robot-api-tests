@@ -4,7 +4,7 @@ Resource            ../../libs/libraries.resource
 
 
 *** Keywords ***
-Delete user by id
+Delete User by Id
     [Documentation]    Deletes a user by sending a DELETE request to /usuarios/${user_id}.
     ...                Requires a valid user ID in the URL.
     [Arguments]        ${user_id}

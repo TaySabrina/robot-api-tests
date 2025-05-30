@@ -4,7 +4,7 @@ Resource            ../../libs/libraries.resource
 
 
 *** Keywords ***
-Get Usuarios
+Get Users
     [Documentation]    Sends a GET request to the specified endpoint using the given headers and optional query parameters.
     [Arguments]    ${headers}    ${params}=${None} 
     ${query_string}    Run Keyword If    ${params} != None    Set Variable    ${params}

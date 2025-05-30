@@ -16,43 +16,54 @@ This repository contains automated API tests for the [ServeRest API](https://ser
 
 ```bash
 ROBOT-API-TESTS/
-│
-├── .env                         # Environment variables
-├── .gitignore                  # Git ignored files
-│
+├── .env                         # Environment variables file
+├── .gitignore                   # Specifies intentionally untracked files to ignore in Git
 ├── libs/
-│   └── libraries.resource      # Shared keyword libraries
-│
+│   └── libraries.resource       # Shared external libraries used in tests
 ├── resources/
-│   ├── controller/             # Endpoint-specific resource files
-│   │   ├── delete_usuarios.resource
-│   │   ├── get_usuarios.resource
-│   │   ├── post_login.resource
-│   │   ├── post_usuarios.resource
-│   │   └── put_usuarios.resource
-│   │
-│   ├── keywords/               # Custom reusable keywords
-│   │   ├── action_keywords.resource
-│   │   ├── user_keywords.resource
-│   │   └── utils.resource
-│   │
+│   ├── controller/              # Resource files organized by API controller (grouped by HTTP verb and entity)
+│   │   ├── delete_produtos.resource     
+│   │   ├── delete_usuarios.resource    
+│   │   ├── get_produtos.resource        
+│   │   ├── get_usuarios.resource        
+│   │   ├── post_login.resource          
+│   │   ├── post_produtos.resource       
+│   │   ├── post_usuarios.resource       
+│   │   ├── put_produtos.resource        
+│   │   └── put_usuarios.resource        
+│   ├── keywords/
+│   │   ├── action_keywords.resource     # Custom reusable keywords for actions
+│   │   └── utils.resource               # Utility keywords (e.g., random data, token handling)
+│   ├── schemas/                 # JSON schemas used for API contract validation
+│   │   ├── delete_produtos_200.json     
+│   │   ├── delete_produtos_401.json     
+│   │   ├── get_produtos_200.json        
+│   │   ├── get_produtos_id_200.json     
+│   │   ├── get_produtos_id_400.json     
+│   │   ├── post_produtos_201.json       
+│   │   ├── post_produtos_400.json       
+│   │   ├── post_produtos_401.json       
+│   │   ├── post_produtos_403.json       
+│   │   ├── put_produtos_200.json        
+│   │   ├── put_produtos_400.json        
+│   │   └── put_produtos_403.json        
 │   └── variables/
-│       └── variable.resource   # Global variables
-│
-├── tests/                      # Test cases organized by feature
-│   ├── login/
-│   │   └── post_login.robot
-│   │
-│   ├── users/
-│   │   ├── get_user_id.robot
-│   │   └── post_user.robot
-│   │
-│   └── usuarios/
-│       ├── get_user_id.robot
-│       ├── post_user.robot
-│       ├── put_user.robot
-│       └── __init__.robot     # Optional initialization file
-│
+│       └── variable.resource    # Global project variables
+├── tests/
+│   ├── login/                   # Login test suite
+|   |   ├── post_login.robot
+│   ├── products/                # Test cases related to product endpoints
+│   │   ├── delete_produtos_id.robot     
+│   │   ├── get_produtos_id.robot        
+│   │   ├── get_produtos.robot           
+│   │   ├── post_produtos.robot          
+│   │   └── put_produtos.robot           
+│   ├── users/                   # Test cases related to user endpoints
+│   │   ├── delete_user.robot            
+│   │   ├── get_user_id.robot            
+│   │   ├── post_user.robot              
+│   │   └── put_user.robot               
+│   └── __init__.robot          # Test suite initialization file
 └── README.md                   # Project documentation
 ```
 ## ✅ Folder Purpose
