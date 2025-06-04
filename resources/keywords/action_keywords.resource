@@ -34,3 +34,8 @@ Post new product
     ${response}        Post Produtos      ${product_data}     ${HEADERS}
     RETURN             ${response}   
 
+Get product by id
+    [Arguments]    ${product_id}    ${headers}
+    ${response}    Get Produtos    ${headers}    ${product_id}
+    RETURN    ${response}
+
