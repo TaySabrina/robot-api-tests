@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Mensagem de erro simples retornada pela API"
+        },
+        {
+          "type": "array",
+          "description": "Lista de mensagens de erro quando há múltiplos problemas",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "message": "preco deve ser um número positivo"
+    },
+    {
+      "message": "Já existe produto com esse nome"
+    },
+    {
+      "message": ["nome é obrigatório", "preco deve ser um número positivo"]
+    }
+  ],
+  "additionalProperties": false
+}
