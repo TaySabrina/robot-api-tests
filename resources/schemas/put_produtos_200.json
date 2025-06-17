@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "put_produtos_200",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "const": "Registro alterado com sucesso"
+    }
+  },
+  "additionalProperties": false
+}

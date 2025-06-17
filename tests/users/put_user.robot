@@ -17,7 +17,7 @@ Update User By Id
     Remove From Dictionary    ${updated_user}    id
     # Update the name field with a new value
     Set To Dictionary    ${updated_user}    nome=${new_name}
-    ${response}      Put user by id    ${user_id}    ${updated_user}
+    ${response}      Put User by Id    ${user_id}    ${updated_user}
     Check successful response    ${response}    200    Registro alterado com sucesso
     Log        PUT Status Code: ${response.status_code}
     #Validate that the updated user data matches the expected values
@@ -34,7 +34,7 @@ Update User Without Providing Name
     Remove From Dictionary    ${update_user_data}    nome
     Remove From Dictionary    ${update_user_data}    id
     # Make the PUT request to update the user
-    ${response}    Put user by id    ${user_data}[id]    ${update_user_data}
+    ${response}    Put User by Id    ${user_data}[id]    ${update_user_data}
     Should Be Equal As Integers    ${response.status_code}    400    
     Should Contain    ${response.json()}[nome]    nome é obrigatório
     Log            PUT Status Code: ${response.status_code}

@@ -4,7 +4,7 @@ Resource            ../../libs/libraries.resource
 
 
 *** Keywords ***
-Post Produtos
+Post Products
     [Documentation]     Sends a POST request to the specified endpoint with the given payload and headers
     [Arguments]    ${payload}    ${headers}
     ${response}    POST    ${BASE_URL}/produtos    json=${payload}    headers=${HEADERS}    expected_status=any
