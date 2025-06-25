@@ -8,8 +8,7 @@ Test Tags           get_products_id    products
 GET Product By ID
    [Documentation]    Create a product and validate that it can be retrieved by its ID
     ${product_data}    Create And Register New Product
-    VAR    ${token}    ${user_data}[token]
-    VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
+    VAR    &{headers}=    Authorization=${user_data}[token]    Content-Type=application/json
     ${response}    Get product by id    ${product_data}[id]    ${headers}
     Status Should Be    200    ${response}
     Should Be Equal    ${response.json()}[nome]         ${product_data}[nome]
@@ -24,8 +23,7 @@ GET Product By ID
 GET Product By ID - Product Not Found
     [Documentation]    Verify that a 400 status and "Produto não encontrado" message are returned for an invalid product ID
     [Tags]    negative
-    VAR    ${token}      ${user_data}[token]
-    VAR    &{headers}       Authorization=${token}    Content-Type=application/json
+    VAR    &{headers}       Authorization=${user_data}[token]    Content-Type=application/json
     # Use an invalid/non-existent product ID
     VAR    ${invalid_id}   0000000000000000
     ${response}     Get product by id    ${invalid_id}    ${headers}

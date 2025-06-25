@@ -29,7 +29,7 @@ Create And Register New User
     ${user_data}           Generate new user
     ${response}            Post new user    ${user_data}
     Set To Dictionary      ${user_data}    id=${response.json()}[_id]
-    VAR    ${user_data}    ${user_data}    scope=GLOBAL
+    Set Suite Variable    ${user_data}    ${user_data}
     Check successful response    ${response}    201    Cadastro realizado com sucesso
     Log              User created and register successfully
     RETURN                 ${user_data}    # Return the user data for further use
@@ -55,7 +55,7 @@ Login registered user and save token
     VAR    ${token}       ${response.json()}[authorization]
     Set To Dictionary    ${user_data}    token=${token}
     #Update the global variable with the new user_data (now containing the token)
-    VAR             ${user_data}    ${user_data}    scope=GLOBAL
+    Set Suite Variable    ${user_data}    ${user_data}
     Log             Status Code: ${response.status_code}
     Log             Received Message: ${response.json()}[message]
     RETURN          ${user_data}
@@ -123,6 +123,6 @@ Create And Register New Product
     ${response}    Post new product    ${product_data}    ${headers}
     Set To Dictionary    ${product_data}    id=${response.json()}[_id]
     Set To Dictionary    ${product_data}    raw_response_json=${response.json()}
-    VAR    ${product_data}    ${product_data}    scope=GLOBAL
+    Set Suite Variable    ${product_data}    ${product_data}    
     Check successful response    ${response}    201    Cadastro realizado com sucesso
     RETURN    ${product_data}

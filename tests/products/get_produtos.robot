@@ -8,8 +8,7 @@ Test Tags           get_products    products
 GET All Products - No Filters
     [Documentation]    Create a product and validate that it appears in the list of all products
     ${product_data}    Create And Register New Product
-    VAR    ${token}    ${user_data}[token]
-    VAR    &{headers}=    Authorization=${token}    Content-Type=application/json
+    VAR    &{headers}=    Authorization=${user_data}[token]    Content-Type=application/json
     ${response}    Get Produtos    ${headers}    ${EMPTY}    ${NONE}
     Status Should Be    200    ${response}
     VAR    ${product_id}     ${product_data}[id]
@@ -31,8 +30,7 @@ GET All Products - Filter By Quantity
     ${product_data}    Generate And Save Random Product Data
     Set To Dictionary    ${product_data}    quantidade=2
     # Create product with quantity=2
-    VAR    ${token}        ${user_data}[token]
-    VAR    &{headers}       Authorization=${token}    Content-Type=application/json
+    VAR    &{headers}       Authorization=${user_data}[token]    Content-Type=application/json
     ${response}   Post new product    ${product_data}    ${headers}
     Status Should Be    201    ${response}
     # Request products filtered by quantity=2
