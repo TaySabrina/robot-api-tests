@@ -21,5 +21,6 @@ Resource            ../resources/controller/put_usuarios.resource
 Resource            ../resources/controller/delete_usuarios.resource
 Resource            ../resources/controller/post_produtos.resource
 Resource            ../resources/controller/get_produtos.resource
+Resource            ../resources/controller/put_produtos.resource
 
 
