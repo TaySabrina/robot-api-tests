@@ -4,7 +4,7 @@ Resource            ../../libs/libraries.resource
 
 
 *** Keywords ***
-Put user by id
+Put User by Id
     [Documentation]    Updates an existing user's data by sending a PUT request to the /usuarios/{id} endpoint.
     [Arguments]    ${user_id}    ${updated_user_data}
     ${response}    PUT    ${BASE_URL}/usuarios/${user_id}

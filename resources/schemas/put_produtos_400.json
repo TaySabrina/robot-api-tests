@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "pattern": ".*existe produto.*"
+    }
+  },
+  "required": ["message"],
+  "additionalProperties": false
+}
